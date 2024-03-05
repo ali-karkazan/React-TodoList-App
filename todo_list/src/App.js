@@ -1,8 +1,24 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./App.css";
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [todoEditing, setTodEditing] = useState(null);
+
+  useEffect(() => {
+    const json = localStorage.getItem("todos");
+    const loadedTodos = JSON.parse(json);
+    if(loadedTodos){
+      setTodos(loadedTodos)
+    }
+  }, []);
+
+  useEffect(() => {
+    if(todos.length > 0) {
+      const json = JSON.stringify(todos);
+      localStorage.setItem("todos", json)
+    }
+  }, [todos]);
+
 
   // Add the handlesubmit code here
   function handleSubmit(e) {
@@ -99,5 +115,5 @@ const App = () => {
       ))}
     </div>
   );
-              };
+};
 export default App;
