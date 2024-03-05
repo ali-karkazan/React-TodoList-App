@@ -4,7 +4,7 @@ const App = () => {
   const [todos, setTodos] = useState([]);
 
   // Add the handlesubmit code here
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault();
 
     let todo = document.getElementById('todoAdd').value
@@ -13,7 +13,7 @@ const App = () => {
       text: todo.trim(),
       completed: false,
     };
-    if (newTodo.text.length > 0 ){
+    if (newTodo.text.length > 0) {
       setTodos([...todos].concat(newTodo));
     } else {
       alert("Enter Valid Task");
@@ -21,10 +21,11 @@ const App = () => {
     document.getElementById('todoAdd').value = ""
   }
 
-
   // Add the deleteToDo code here
-
-
+  function deleteToDo(id) {
+    let updatedTodos = [...todos].filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  }
 
   // Add the toggleComplete code here
 
@@ -35,16 +36,18 @@ const App = () => {
   return (
     <div id="todo-list">
       <h1>Todo List</h1>
-        <form onSubmit={handleSubmit}>
-          <input 
-            type="test"
-            id="todoAdd"
-            />
-            <button type="submit">Add Todo</button>
-        </form>
-        {todos.map((todo) => <div className="todo" key={todo.id}>
-          <div className="todo-text">{todo.text}</div>
-          </div>)}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="test"
+          id="todoAdd"
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+      {todos.map((todo) => <div className="todo" key={todo.id}>
+        <div className="todo-text">{todo.text}</div>
+
+      <button onClick={() => deleteToDo(todo.id)}>Delete</button>
+      </div>)}
     </div>
   );
 };
